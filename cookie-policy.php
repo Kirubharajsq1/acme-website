@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Policy — Acme Corp</title>
+
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --brand: #432676;
+            --brand-light: #7c4dbc;
+            --border: #e2e8f0;
+            --gradient: linear-gradient(135deg, #432676 0%, #7c4dbc 50%, #2563eb 100%);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        a { color: var(--brand-light); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--brand);
+            text-decoration: none;
+        }
+
+        .logo:hover { text-decoration: none; }
+
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .nav a:hover { color: var(--brand); text-decoration: none; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(67, 38, 118, 0.25);
+        }
+
+        .page-hero {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 48px 24px 40px;
+        }
+
+        .page-hero-inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: var(--brand-light);
+            margin-bottom: 8px;
+        }
+
+        .page-hero h1 {
+            margin: 0 0 12px;
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .page-hero p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .policy-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 48px 24px 72px;
+        }
+
+        .policy-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 36px;
+        }
+
+        @media (max-width: 768px) {
+            .nav { display: none; }
+            .policy-card { padding: 28px 20px; }
+        }
+
+        .policy-card h2 {
+            margin: 32px 0 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .policy-card h2:first-child { margin-top: 0; }
+
+        .policy-card p,
+        .policy-card li {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .policy-card p { margin: 0 0 14px; }
+
+        .policy-card ul {
+            margin: 0 0 14px;
+            padding-left: 20px;
+        }
+
+        .policy-card li { margin-bottom: 6px; }
+
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 20px;
+            font-size: 14px;
+        }
+
+        .cookie-table th,
+        .cookie-table td {
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .cookie-table th {
+            background: #faf8ff;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .cookie-table td { color: var(--muted); }
+
+        .site-footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 40px 24px;
+            font-size: 13px;
+        }
+
+        .footer-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-inner strong { color: #fff; font-size: 15px; }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover { color: #fff; }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.php" class="logo">
+                <span class="logo-mark">A</span>
+                Acme Corp
+            </a>
+            <nav class="nav">
+                <a href="index.php#services">Services</a>
+                <a href="index.php#about">About</a>
+                <a href="index.php#contact">Contact</a>
+                <a href="privacy-policy.php">Privacy Policy</a>
+                <a href="cookie-policy.php">Cookie Policy</a>
+            </nav>
+            <a href="index.php#contact" class="btn btn-primary">Get a Quote</a>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <div class="page-hero-inner">
+            <div class="page-label">Legal</div>
+            <h1>Cookie Policy</h1>
+            <p>Last updated: <?php echo date('F j, Y'); ?></p>
+        </div>
+    </section>
+
+    <main class="policy-content">
+        <article class="policy-card">
+            <h2>1. What Are Cookies?</h2>
+            <p>
+                Cookies are small text files placed on your device when you visit a website. They help websites function,
+                remember your preferences, and provide insights into how visitors interact with pages and content.
+            </p>
+
+            <h2>2. How We Use Cookies</h2>
+            <p>Acme Corp uses cookies and similar technologies to:</p>
+            <ul>
+                <li>Keep the website secure and functioning correctly</li>
+                <li>Remember your cookie preferences and form interactions</li>
+                <li>Measure website traffic and usage patterns</li>
+                <li>Support marketing and advertising performance measurement</li>
+                <li>Improve site content, speed, and user experience</li>
+            </ul>
+
+            <h2>3. Cookie Categories</h2>
+            <p>The cookies we use are grouped into the following categories:</p>
+
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Typical Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Necessary</td>
+                        <td>Essential for the site to work and cannot be switched off in our systems.</td>
+                        <td>Session handling, security, load balancing</td>
+                    </tr>
+                    <tr>
+                        <td>Analytics</td>
+                        <td>Help us understand how visitors move through the site and how pages perform.</td>
+                        <td>Traffic reports, page engagement, usage insights</td>
+                    </tr>
+                    <tr>
+                        <td>Marketing</td>
+                        <td>Used to track campaign effectiveness and deliver more relevant promotional content.</td>
+                        <td>Campaign attribution, remarketing, lead source tracking</td>
+                    </tr>
+                    <tr>
+                        <td>Advertising</td>
+                        <td>Enable advertising features and measurement across partner platforms and ad networks.</td>
+                        <td>Ad delivery, ad frequency control, conversion tracking</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>4. Third-Party Cookies</h2>
+            <p>
+                Some cookies on our site may be set by third-party services, such as analytics or advertising providers.
+                These third parties may collect data in accordance with their own privacy and cookie policies.
+            </p>
+
+            <h2>5. Managing Your Cookie Preferences</h2>
+            <p>
+                When you first visit our website, you can choose to accept all cookies, reject non-essential cookies, or
+                customize your preferences by category. Necessary cookies remain active because they are required for
+                the operation of the website.
+            </p>
+            <p>
+                You can update your choices at any time through the cookie settings presented on the site. You may also
+                manage or delete cookies in your browser settings.
+            </p>
+
+            <h2>6. Cookie Duration</h2>
+            <p>
+                Some cookies are session cookies and expire when you close your browser. Others remain on your device for
+                a set period or until manually deleted, so your preferences and usage history can be remembered.
+            </p>
+
+            <h2>7. Browser Controls</h2>
+            <p>
+                Most web browsers allow you to control cookies through settings preferences. Restricting cookies may impact
+                certain features or functionality on the site.
+            </p>
+
+            <h2>8. Changes to This Cookie Policy</h2>
+            <p>
+                We may update this Cookie Policy from time to time to reflect changes in technology, legal requirements,
+                or our services. The date at the top of this page indicates when it was last revised.
+            </p>
+
+            <h2>9. Contact Us</h2>
+            <p>
+                If you have questions about our use of cookies or tracking technologies, contact us at:
+            </p>
+            <ul>
+                <li><strong>Email:</strong> <a href="mailto:privacy@acmecorp.example">privacy@acmecorp.example</a></li>
+                <li><strong>Address:</strong> 125 Innovation Street, San Francisco, CA 94105, USA</li>
+                <li><strong>Phone:</strong> +1 (555) 123-4567</li>
+            </ul>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>
+                <strong>Acme Corp</strong><br>
+                Web Development · Cloud Management · Mobile Apps
+            </div>
+            <div class="footer-links">
+                <a href="index.php">Home</a>
+                <a href="privacy-policy.php">Privacy Policy</a>
+                <a href="cookie-policy.php">Cookie Policy</a>
+            </div>
+            <div>&copy; <?php echo date('Y'); ?> Acme Corporation LLC. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script
+        src="http://localhost:5173/cookie-widget.js"
+        data-site-key="zk_176d7ab8c5a3a7c048b6fbc154bbb77f"
+        data-api-base="http://localhost:3000"
+        async
+    ></script>
+</body>
+</html>
