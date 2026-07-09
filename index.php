@@ -603,9 +603,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </footer>
 
-    <script
+    <!-- Demo first-party cookies for Zerra scanner and admin panel -->
+    <script>
+    (function () {
+      function setDemoCookie(name, value, maxAge) {
+        document.cookie =
+          name + "=" + encodeURIComponent(value) + "; path=/; max-age=" + maxAge + "; SameSite=Lax";
+      }
+
+      var demoId = "demo_" + Date.now().toString(36);
+
+      setDemoCookie("acme_session_id", "sess_" + demoId, 60 * 60 * 24);
+      setDemoCookie("acme_analytics_id", "ana_" + demoId, 60 * 60 * 24 * 365);
+      setDemoCookie("acme_session_metrics", "met_" + demoId, 60 * 60 * 24 * 30);
+      setDemoCookie("acme_marketing_id", "mkt_" + demoId, 60 * 60 * 24 * 180);
+      setDemoCookie("acme_ad_pref", "ad_" + demoId, 60 * 60 * 24 * 180);
+    })();
+    </script>
+
+<script
   src="http://localhost:5173/cookie-widget.js"
-  data-site-key="zk_176d7ab8c5a3a7c048b6fbc154bbb77f"
+  data-site-key="zk_ee59130b59de83eb12294d94802d5cc4"
   data-api-base="http://localhost:3000"
   async
 ></script>
