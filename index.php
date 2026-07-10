@@ -395,6 +395,42 @@
             min-height: 100px;
         }
 
+        .consent-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 4px 0 18px;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #f8fafc;
+        }
+
+        .consent-check input[type="checkbox"] {
+            margin-top: 3px;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--brand);
+            flex-shrink: 0;
+        }
+
+        .consent-check label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--muted);
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        .form-note {
+            margin: 12px 0 0;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .form-note.success { color: #16a34a; }
+        .form-note.error { color: #dc2626; }
+
         /* Footer */
         .site-footer {
             background: #0f172a;
@@ -457,11 +493,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <nav class="nav">
                 <a href="#services">Services</a>
                 <a href="#about">About</a>
+                <a href="#register">Register</a>
                 <a href="#contact">Contact</a>
                 <a href="privacy-policy.php">Privacy Policy</a>
                 <a href="cookie-policy.php">Cookie Policy</a>
             </nav>
-            <a href="#contact" class="btn btn-primary">Get a Quote</a>
+            <a href="#register" class="btn btn-primary">Register</a>
         </div>
     </header>
 
@@ -556,7 +593,50 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
 
-    <section id="contact" class="section">
+    <section id="register" class="section">
+        <div class="section-header">
+            <div class="section-label">Create Account</div>
+            <h2>Register</h2>
+            <p>Sign up with your details. Optionally consent to email marketing.</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+                <p><strong>Why register?</strong></p>
+                <p>Get project updates, product news, and early access to Acme Corp resources.</p>
+                <p>We only use your contact details for the purposes you agree to. You can withdraw marketing consent at any time.</p>
+                <p><a href="privacy-policy.php" style="color: var(--brand); font-weight: 600;">Read our Privacy Policy →</a></p>
+            </div>
+
+            <form id="register-form" class="contact-form" novalidate>
+                <div class="form-group">
+                    <label for="reg-name">Full Name</label>
+                    <input type="text" id="reg-name" name="name" placeholder="John Doe" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email Address</label>
+                    <input type="email" id="reg-email" name="email" placeholder="john@company.com" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone">Phone Number</label>
+                    <input type="tel" id="reg-phone" name="phone" placeholder="+1 (555) 123-4567" required autocomplete="tel">
+                </div>
+
+                <div class="consent-check">
+                    <input type="checkbox" id="marketing-consent" name="marketing_consent">
+                    <label for="marketing-consent">
+                        I agree to allow Acme Corp to use my name, email, and phone number for email marketing communications.
+                        You can <a href="privacy-policy.php#marketing-preferences" style="color: var(--brand); font-weight: 600;">update or withdraw</a> this later.
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+                <p id="register-note" class="form-note" hidden></p>
+            </form>
+        </div>
+    </section>
+
+    <section id="contact" class="section" style="padding-top: 0;">
         <div class="section-header">
             <div class="section-label">Get in Touch</div>
             <h2>Contact Us</h2>
@@ -573,16 +653,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             <form class="contact-form" onsubmit="event.preventDefault(); alert('Thank you! We will get back to you soon.');">
                 <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" placeholder="John Doe" required>
+                    <label for="contact-name">Full Name</label>
+                    <input type="text" id="contact-name" name="name" placeholder="John Doe" required>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" placeholder="john@company.com" required>
+                    <label for="contact-email">Email Address</label>
+                    <input type="email" id="contact-email" name="email" placeholder="john@company.com" required>
                 </div>
                 <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
+                    <label for="contact-message">Message</label>
+                    <textarea id="contact-message" name="message" placeholder="Tell us about your project..." required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
             </form>
@@ -621,9 +701,92 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     })();
     </script>
 
+    <!-- Registration form → personal data consent (CMP) -->
+    <script>
+    (function () {
+      var form = document.getElementById("register-form");
+      var note = document.getElementById("register-note");
+      if (!form) return;
+
+      function showNote(message, type) {
+        note.hidden = false;
+        note.textContent = message;
+        note.className = "form-note " + (type || "");
+      }
+
+      function waitForCmp(timeoutMs) {
+        return new Promise(function (resolve, reject) {
+          if (window.CMP && typeof window.CMP.recordConsent === "function") {
+            resolve(window.CMP);
+            return;
+          }
+          var started = Date.now();
+          var timer = setInterval(function () {
+            if (window.CMP && typeof window.CMP.recordConsent === "function") {
+              clearInterval(timer);
+              resolve(window.CMP);
+            } else if (Date.now() - started > (timeoutMs || 5000)) {
+              clearInterval(timer);
+              reject(new Error("CMP SDK not loaded"));
+            }
+          }, 100);
+        });
+      }
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        var nameEl = document.getElementById("reg-name");
+        var emailEl = document.getElementById("reg-email");
+        var phoneEl = document.getElementById("reg-phone");
+        var marketingConsent = document.getElementById("marketing-consent");
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        var subject = {
+          name: nameEl.value.trim(),
+          email: emailEl.value.trim(),
+          phone: phoneEl.value.trim(),
+        };
+
+        try {
+          console.log("[Acme] Registered user", subject);
+
+          if (marketingConsent.checked) {
+            var cmp = await waitForCmp(5000);
+            await cmp.recordConsent({
+              purpose: "email_marketing",
+              status: "accepted",
+              subject: subject,
+            });
+            showNote("Account created. Email marketing consent recorded.", "success");
+          } else {
+            showNote("Account created. No marketing consent was given.", "success");
+          }
+
+          form.reset();
+        } catch (err) {
+          console.error(err);
+          showNote(err && err.message ? err.message : "Something went wrong. Please try again.", "error");
+        }
+      });
+    })();
+    </script>
+
 <script
   src="http://localhost:5173/cookie-widget.js"
-  data-site-key="zk_ee59130b59de83eb12294d94802d5cc4"
+  data-site-key="zk_f09c533b9161840a23fc3516e6a62050"
+  data-api-base="http://localhost:3000"
+  async
+></script>
+
+<!-- Zerra personal-data consent SDK (CMP) -->
+<script
+  src="http://localhost:5173/consent.js"
+  data-organization-key="a0000000-0000-0000-0000-000000000001"
   data-api-base="http://localhost:3000"
   async
 ></script>

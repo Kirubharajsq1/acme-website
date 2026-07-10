@@ -207,6 +207,124 @@
 
         .cookie-table td { color: var(--muted); }
 
+        .pref-panel {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #faf8ff;
+        }
+
+        .pref-panel h3 {
+            margin: 0 0 6px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .pref-panel > p {
+            margin: 0 0 16px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .pref-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .pref-row { grid-template-columns: 1fr; }
+        }
+
+        .pref-row input[type="email"],
+        .pref-row input[type="text"],
+        .pref-row input[type="tel"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            background: #fff;
+        }
+
+        .pref-row input:focus {
+            border-color: var(--brand-light);
+        }
+
+        .pref-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 8px 0 14px;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #fff;
+        }
+
+        .pref-check input {
+            margin-top: 3px;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--brand);
+            flex-shrink: 0;
+        }
+
+        .pref-check label {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        .pref-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            background: #fff;
+            color: var(--brand);
+            border: 1px solid rgba(67, 38, 118, 0.2);
+        }
+
+        .btn-danger {
+            background: #fff;
+            color: #dc2626;
+            border: 1px solid rgba(220, 38, 38, 0.25);
+        }
+
+        .pref-status {
+            margin-top: 12px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .pref-status.success { color: #16a34a; }
+        .pref-status.error { color: #dc2626; }
+        .pref-status.info { color: var(--brand); }
+
+        .pref-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .pref-badge.accepted { background: #f0fdf4; color: #16a34a; }
+        .pref-badge.withdrawn { background: #fff0f0; color: #dc2626; }
+        .pref-badge.none { background: #f1f5f9; color: #64748b; }
+
         .site-footer {
             background: #0f172a;
             color: #94a3b8;
@@ -296,9 +414,46 @@
             <h2>4. Legal Basis for Processing</h2>
             <p>
                 Depending on your location, we process personal data based on your consent, performance of a contract,
-                legitimate business interests, or compliance with legal obligations. You may withdraw consent at any time
-                through our cookie preference center or by contacting us.
+                legitimate business interests, or compliance with legal obligations. You may withdraw marketing consent at any time
+                using the preference panel below, or change cookie preferences via the cookie settings on our website.
             </p>
+
+            <h2 id="marketing-preferences">4a. Marketing Preferences</h2>
+            <p>
+                We may use your <strong>name</strong>, <strong>email</strong>, and <strong>phone number</strong> for email marketing
+                only if you have given consent (for example, when registering on our website). Use this panel to check,
+                update, or withdraw that consent.
+            </p>
+
+            <div class="pref-panel" id="marketing-pref-panel">
+                <h3>Email marketing consent</h3>
+                <p>Enter the email you used when registering to manage your preference.</p>
+
+                <div id="pref-current-badge" class="pref-badge none" hidden>No record found</div>
+
+                <div class="pref-row">
+                    <input type="email" id="pref-email" placeholder="you@company.com" autocomplete="email" required>
+                    <button type="button" class="btn btn-outline" id="pref-lookup-btn">Check status</button>
+                </div>
+
+                <div class="pref-row" style="grid-template-columns: 1fr 1fr;">
+                    <input type="text" id="pref-name" placeholder="Full name (optional)" autocomplete="name">
+                    <input type="tel" id="pref-phone" placeholder="Phone (optional)" autocomplete="tel">
+                </div>
+
+                <div class="pref-check">
+                    <input type="checkbox" id="pref-marketing">
+                    <label for="pref-marketing">
+                        I agree to allow Acme Corp to use my name, email, and phone number for email marketing communications.
+                    </label>
+                </div>
+
+                <div class="pref-actions">
+                    <button type="button" class="btn btn-primary" id="pref-update-btn">Save / Update consent</button>
+                    <button type="button" class="btn btn-danger" id="pref-withdraw-btn">Withdraw consent</button>
+                </div>
+                <p id="pref-note" class="pref-status" hidden></p>
+            </div>
 
             <h2>5. Cookies &amp; Tracking Technologies</h2>
             <p>
@@ -363,11 +518,11 @@
                 <li>Access, correct, or delete your personal data</li>
                 <li>Restrict or object to certain processing</li>
                 <li>Data portability</li>
-                <li>Withdraw consent for cookie and marketing preferences</li>
+                <li>Withdraw consent for cookie preferences (cookie settings) and <a href="#marketing-preferences">marketing preferences</a></li>
                 <li>Lodge a complaint with a supervisory authority</li>
             </ul>
             <p>
-                To exercise these rights, contact us at
+                To exercise these rights, use the marketing preference panel above, or contact us at
                 <a href="mailto:privacy@acmecorp.example">privacy@acmecorp.example</a>.
             </p>
 
@@ -428,5 +583,150 @@
         data-api-base="http://localhost:3000"
         async
     ></script>
+
+    <script
+        src="http://localhost:5173/consent.js"
+        data-organization-key="a0000000-0000-0000-0000-000000000001"
+        data-api-base="http://localhost:3000"
+        async
+    ></script>
+
+    <script>
+    (function () {
+      var PURPOSE = "email_marketing";
+      var emailEl = document.getElementById("pref-email");
+      var nameEl = document.getElementById("pref-name");
+      var phoneEl = document.getElementById("pref-phone");
+      var checkEl = document.getElementById("pref-marketing");
+      var badgeEl = document.getElementById("pref-current-badge");
+      var noteEl = document.getElementById("pref-note");
+      var lookupBtn = document.getElementById("pref-lookup-btn");
+      var updateBtn = document.getElementById("pref-update-btn");
+      var withdrawBtn = document.getElementById("pref-withdraw-btn");
+
+      function showNote(message, type) {
+        noteEl.hidden = false;
+        noteEl.textContent = message;
+        noteEl.className = "pref-status " + (type || "");
+      }
+
+      function setBadge(status) {
+        badgeEl.hidden = false;
+        if (status === "accepted") {
+          badgeEl.className = "pref-badge accepted";
+          badgeEl.textContent = "Current status: Accepted";
+          checkEl.checked = true;
+        } else if (status === "withdrawn" || status === "rejected") {
+          badgeEl.className = "pref-badge withdrawn";
+          badgeEl.textContent = "Current status: " + (status === "withdrawn" ? "Withdrawn" : "Rejected");
+          checkEl.checked = false;
+        } else {
+          badgeEl.className = "pref-badge none";
+          badgeEl.textContent = "No marketing consent record found";
+          checkEl.checked = false;
+        }
+      }
+
+      function waitForCmp(timeoutMs) {
+        return new Promise(function (resolve, reject) {
+          if (window.CMP && typeof window.CMP.recordConsent === "function") {
+            resolve(window.CMP);
+            return;
+          }
+          var started = Date.now();
+          var timer = setInterval(function () {
+            if (window.CMP && typeof window.CMP.recordConsent === "function") {
+              clearInterval(timer);
+              resolve(window.CMP);
+            } else if (Date.now() - started > (timeoutMs || 5000)) {
+              clearInterval(timer);
+              reject(new Error("CMP SDK not loaded"));
+            }
+          }, 100);
+        });
+      }
+
+      function subjectFromForm() {
+        return {
+          name: (nameEl.value || "").trim() || null,
+          email: (emailEl.value || "").trim().toLowerCase(),
+          phone: (phoneEl.value || "").trim() || null,
+        };
+      }
+
+      lookupBtn.addEventListener("click", async function () {
+        var email = (emailEl.value || "").trim();
+        if (!email) {
+          emailEl.focus();
+          showNote("Enter your email to check status.", "error");
+          return;
+        }
+        try {
+          var cmp = await waitForCmp(5000);
+          var result = await cmp.hasConsent(email, PURPOSE).then(function (has) {
+            return cmp.getConsent(email).then(function (all) {
+              var match = (all.records || []).find(function (r) {
+                return (r.purposeKey || "").indexOf("email_marketing") === 0 ||
+                  (r.purpose || "").toLowerCase().indexOf("email marketing") !== -1;
+              });
+              return { has: has, status: match ? match.status : (has ? "accepted" : null) };
+            });
+          });
+          setBadge(result.status);
+          showNote(result.has ? "You currently allow email marketing." : "Email marketing is not active for this email.", "info");
+        } catch (err) {
+          console.error(err);
+          showNote(err.message || "Could not look up consent.", "error");
+        }
+      });
+
+      updateBtn.addEventListener("click", async function () {
+        var subject = subjectFromForm();
+        if (!subject.email) {
+          emailEl.focus();
+          showNote("Email is required.", "error");
+          return;
+        }
+        if (!checkEl.checked) {
+          showNote("Check the marketing box to grant consent, or use Withdraw.", "error");
+          return;
+        }
+        try {
+          var cmp = await waitForCmp(5000);
+          await cmp.updateConsent({
+            purpose: PURPOSE,
+            status: "accepted",
+            subject: subject,
+          });
+          setBadge("accepted");
+          showNote("Marketing consent saved / updated.", "success");
+        } catch (err) {
+          console.error(err);
+          showNote(err.message || "Could not update consent.", "error");
+        }
+      });
+
+      withdrawBtn.addEventListener("click", async function () {
+        var subject = subjectFromForm();
+        if (!subject.email) {
+          emailEl.focus();
+          showNote("Email is required to withdraw consent.", "error");
+          return;
+        }
+        try {
+          var cmp = await waitForCmp(5000);
+          await cmp.withdrawConsent({
+            purpose: PURPOSE,
+            identifier: { email: subject.email, name: subject.name, phone: subject.phone },
+          });
+          setBadge("withdrawn");
+          showNote("Marketing consent withdrawn. We will keep the audit record.", "success");
+        } catch (err) {
+          console.error(err);
+          showNote(err.message || "Could not withdraw consent.", "error");
+        }
+      });
+    })();
+    </script>
 </body>
 </html>
