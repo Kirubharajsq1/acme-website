@@ -1,12 +1,9 @@
 services:
   web:
-    image: php:8.2-apache
+    image: httpd:2.4-alpine
     ports:
       - "8081:80"
     volumes:
-      - .:/var/www/html
-      - ./apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
-    command: >
-      bash -c "a2enmod rewrite headers expires deflate
-      && apache2-foreground"
+      - .:/usr/local/apache2/htdocs
+      - ./apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
     restart: unless-stopped

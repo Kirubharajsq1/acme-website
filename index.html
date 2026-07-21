@@ -495,8 +495,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <a href="#about">About</a>
                 <a href="#register">Register</a>
                 <a href="#contact">Contact</a>
-                <a href="privacy-policy.php">Privacy Policy</a>
-                <a href="cookie-policy.php">Cookie Policy</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="cookie-policy.html">Cookie Policy</a>
             </nav>
             <a href="#register" class="btn btn-primary">Register</a>
         </div>
@@ -605,7 +605,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p><strong>Why register?</strong></p>
                 <p>Get project updates, product news, and early access to Acme Corp resources.</p>
                 <p>We only use your contact details for the purposes you agree to. You can withdraw marketing consent at any time.</p>
-                <p><a href="privacy-policy.php" style="color: var(--brand); font-weight: 600;">Read our Privacy Policy →</a></p>
+                <p><a href="privacy-policy.html" style="color: var(--brand); font-weight: 600;">Read our Privacy Policy →</a></p>
             </div>
 
             <form id="register-form" class="contact-form" novalidate>
@@ -626,7 +626,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <input type="checkbox" id="marketing-consent" name="marketing_consent">
                     <label for="marketing-consent">
                         I agree to allow Acme Corp to use my name, email, and phone number for email marketing communications.
-                        You can <a href="privacy-policy.php#marketing-preferences" style="color: var(--brand); font-weight: 600;">update or withdraw</a> this later.
+                        You can <a href="privacy-policy.html#marketing-preferences" style="color: var(--brand); font-weight: 600;">update or withdraw</a> this later.
                     </label>
                 </div>
 
@@ -676,10 +676,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 Web Development · Cloud Management · Mobile Apps
             </div>
             <div class="footer-links">
-                <a href="privacy-policy.php">Privacy Policy</a>
-                <a href="cookie-policy.php">Cookie Policy</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="cookie-policy.html">Cookie Policy</a>
             </div>
-            <div>&copy; <?php echo date('Y'); ?> Acme Corporation LLC. All rights reserved.</div>
+            <div>&copy; <span data-site-year></span> Acme Corporation LLC. All rights reserved.</div>
         </div>
     </footer>
 
@@ -776,19 +776,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     })();
     </script>
 
+<!-- @kirubharaj/zerra-sdk — after npm publish use cdn.jsdelivr.net/npm/@kirubharaj/zerra-sdk/dist/zerra-sdk.min.js -->
 <script
-  src="http://localhost:5173/cookie-widget.js"
-  data-site-key="zk_f09c533b9161840a23fc3516e6a62050"
-  data-api-base="http://localhost:3000"
+  src="http://localhost:5174/zerra-sdk.min.js"
+  data-site-key="zk_2834774934b9176a09c68b04711eae9c"
+  data-api-base="http://localhost:5174/api"
   async
 ></script>
 
-<!-- Zerra personal-data consent SDK (CMP) -->
-<script
-  src="http://localhost:5173/consent.js"
-  data-organization-key="a0000000-0000-0000-0000-000000000001"
-  data-api-base="http://localhost:3000"
-  async
-></script>
+    <script>(function(){var y=document.querySelectorAll("[data-site-year]");for(var i=0;i<y.length;i++)y[i].textContent=String(new Date().getFullYear());var d=document.querySelectorAll("[data-last-updated]");var o={year:"numeric",month:"long",day:"numeric"};for(var j=0;j<d.length;j++)d[j].textContent=new Date().toLocaleDateString("en-US",o);})();</script>
 </body>
 </html>
