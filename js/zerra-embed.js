@@ -69,9 +69,12 @@
     } catch (e) {}
   }
 
-  function injectSdk(cfg) {
+  function injectSdk(cfg, options) {
+    options = options || {};
     removeOldSdk();
-    clearConsent(cfg.siteKey);
+    if (options.resetConsent) {
+      clearConsent(cfg.siteKey);
+    }
     if (!cfg.siteKey || !cfg.apiBase || !cfg.sdkSrc) {
       setStatus("Enter a site key and save to load the banner.");
       return;
@@ -88,7 +91,16 @@
       s.setAttribute("data-country", (q.get("country") || q.get("region") || q.get("cc")).toUpperCase());
     }
     s.onload = function () {
-      setStatus("SDK loaded · " + cfg.siteKey.slice(0, 12) + "… · " + cfg.apiBase);
+      var hasConsent = false;
+      try {
+        hasConsent = !!localStorage.getItem("zerra_cookie_consent_" + cfg.siteKey);
+      } catch (e) {}
+      setStatus(
+        "SDK loaded · " +
+          cfg.siteKey.slice(0, 12) +
+          "… · " +
+          (hasConsent ? "consent remembered" : "waiting for consent")
+      );
     };
     s.onerror = function () {
       setStatus("Failed to load SDK from " + cfg.sdkSrc);
@@ -212,9 +224,8 @@
     };
     document.getElementById("acme-zerra-clear").onclick = function () {
       var next = readForm();
-      clearConsent(next.siteKey);
       setStatus("Consent cleared. Reloading banner…");
-      injectSdk(next);
+      injectSdk(next, { resetConsent: true });
     };
     toggle.onclick = function () {
       setCollapsed(!panel.classList.contains("collapsed"));
