@@ -776,13 +776,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     })();
     </script>
 
-<!-- @kirubharaj/zerra-sdk — after npm publish use cdn.jsdelivr.net/npm/@kirubharaj/zerra-sdk/dist/zerra-sdk.min.js -->
-<script
-  src="http://localhost:5174/zerra-sdk.min.js"
-  data-site-key="zk_7548803451c50f0d7d604df05824a97a"
-  data-api-base="http://localhost:5174/api"
-  async
-></script>
+<!-- Zerra: site key / API stored in localStorage via js/zerra-embed.js (works on localhost + LAN IP) -->
+<script src="./js/zerra-embed.js" defer></script>
 
     <script>(function(){var y=document.querySelectorAll("[data-site-year]");for(var i=0;i<y.length;i++)y[i].textContent=String(new Date().getFullYear());var d=document.querySelectorAll("[data-last-updated]");var o={year:"numeric",month:"long",day:"numeric"};for(var j=0;j<d.length;j++)d[j].textContent=new Date().toLocaleDateString("en-US",o);})();</script>
 </body>

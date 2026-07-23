@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zerra banner language test</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --panel: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --brand: #432676;
+      --border: #e2e8f0;
+      --preview-bg: #eef2ff;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 100vh;
+      min-height: 100vh;
+    }
+
+    .options,
+    .preview {
+      height: 100vh;
+      overflow: auto;
+    }
+
+    .options {
+      background: var(--panel);
+      border-right: 1px solid var(--border);
+      padding: 24px 26px 32px;
+    }
+
+    .preview {
+      position: relative;
+      background: linear-gradient(180deg, #f8fafc 0%, var(--preview-bg) 100%);
+      padding: 20px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow a {
+      color: var(--brand);
+      font-size: 14px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .eyebrow span {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      line-height: 1.15;
+      color: var(--brand);
+      font-weight: 750;
+    }
+
+    .lead {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    textarea,
+    input,
+    select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      background: #fff;
+      color: var(--text);
+    }
+
+    textarea {
+      min-height: 128px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      resize: vertical;
+      margin-bottom: 14px;
+      background: #f8fafc;
+      line-height: 1.45;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .field { flex: 1; min-width: 140px; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    button {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #fff;
+      color: var(--brand);
+    }
+
+    button.primary {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+    }
+
+    .quick-label {
+      margin-top: 4px;
+    }
+
+    .quick {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .quick button {
+      font-size: 12px;
+      padding: 7px 11px;
+      background: #f3eef9;
+      border: none;
+      color: var(--brand);
+    }
+
+    .status {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    code { font-size: 13px; }
+
+    .preview-chrome {
+      height: calc(100% - 8px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .preview-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: #f8fafc;
+      font-size: 13px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #cbd5e1;
+    }
+
+    .preview-body {
+      flex: 1;
+      padding: 28px;
+      position: relative;
+      overflow: auto;
+      background: linear-gradient(135deg, #f8fafc, #ede9fe 55%, #e0e7ff);
+    }
+
+    .preview-body h2 {
+      margin: 0 0 10px;
+      font-size: 26px;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .preview-body p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+      max-width: 36ch;
+    }
+
+    .fake-block {
+      height: 88px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(67, 38, 118, 0.08);
+      margin-bottom: 12px;
+    }
+
+    .fake-block.wide { height: 140px; }
+
+    .preview-hint {
+      position: absolute;
+      left: 28px;
+      bottom: 28px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      max-width: 280px;
+      z-index: 1;
+    }
+
+    /* Keep live banner visible only over the right half */
+    #zerra-cookie-banner {
+      left: 50% !important;
+      width: 50% !important;
+      right: 0 !important;
+    }
+
+    #zerra-cookie-manage-button {
+      left: calc(50% + 16px) !important;
+      right: auto !important;
+    }
+
+    #zerra-cookie-preferences {
+      left: 50% !important;
+      width: 50% !important;
+      right: 0 !important;
+    }
+
+    @media (max-width: 900px) {
+      .split {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 100vh;
+      }
+      .options,
+      .preview {
+        height: auto;
+        min-height: 50vh;
+      }
+      .preview { min-height: 60vh; }
+      h1 { font-size: 26px; }
+      #zerra-cookie-banner,
+      #zerra-cookie-preferences {
+        left: 0 !important;
+        width: 100% !important;
+      }
+      #zerra-cookie-manage-button {
+        left: 16px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="split">
+    <aside class="options">
+      <div class="eyebrow">
+        <a href="./index.html">← Website</a>
+        <span>Options</span>
+      </div>
+      <h1>Banner language test</h1>
+      <p class="lead">
+        Change language or country here — the banner updates on the right.
+        No VPN needed (<code>?lang=hi</code>, <code>?country=FR</code>).
+      </p>
+
+      <label for="site-key">Site key (saved in localStorage)</label>
+      <input id="site-key" type="text" spellcheck="false" placeholder="zk_…" autocomplete="off" style="margin-bottom:12px" />
+
+      <label for="api-base">API base</label>
+      <input id="api-base" type="url" spellcheck="false" placeholder="http://localhost:5174/api" style="margin-bottom:12px" />
+
+      <label for="sdk-src">SDK script URL</label>
+      <input id="sdk-src" type="url" spellcheck="false" placeholder="http://localhost:5174/zerra-sdk.min.js" style="margin-bottom:12px" />
+
+      <label for="script-paste">Generated embed (optional paste override)</label>
+      <textarea id="script-paste" spellcheck="false"></textarea>
+
+      <div class="row">
+        <div class="field">
+          <label for="test-lang">Language</label>
+          <select id="test-lang">
+            <option value="">Auto</option>
+            <option value="en">English (en)</option>
+            <option value="hi">Hindi (hi)</option>
+            <option value="fr">French (fr)</option>
+            <option value="de">German (de)</option>
+            <option value="es">Spanish (es)</option>
+            <option value="pt">Portuguese (pt)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="test-country">Country</label>
+          <input id="test-country" maxlength="2" placeholder="IN, FR, DE, US" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="primary" id="btn-apply">Apply &amp; show banner</button>
+        <button type="button" id="btn-load">Reload script</button>
+        <button type="button" id="btn-clear">Clear consent</button>
+      </div>
+
+      <label class="quick-label">Quick tests</label>
+      <div class="quick">
+        <button type="button" data-lang="hi" data-country="">lang=hi</button>
+        <button type="button" data-lang="fr" data-country="">lang=fr</button>
+        <button type="button" data-lang="de" data-country="">lang=de</button>
+        <button type="button" data-lang="es" data-country="">lang=es</button>
+        <button type="button" data-lang="" data-country="IN">country=IN</button>
+        <button type="button" data-lang="" data-country="FR">country=FR</button>
+        <button type="button" data-lang="" data-country="DE">country=DE</button>
+        <button type="button" data-lang="hi" data-country="IN">hi + IN</button>
+        <button type="button" data-lang="" data-country="">Reset</button>
+      </div>
+
+      <div class="status" id="status">Ready — pick a language and click Apply.</div>
+    </aside>
+
+    <section class="preview" aria-label="Banner preview">
+      <div class="preview-chrome">
+        <div class="preview-bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span id="preview-url">your-site.example / banner preview</span>
+        </div>
+        <div class="preview-body">
+          <h2>Sample site content</h2>
+          <p>The live cookie banner appears over this half. Change options on the left to compare languages.</p>
+          <div class="fake-block wide"></div>
+          <div class="fake-block"></div>
+          <div class="fake-block"></div>
+          <div class="preview-hint">Banner stays on this right half so you can keep editing options.</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+  (function () {
+    var KEY_SITE = "acme_zerra_site_key";
+    var KEY_API = "acme_zerra_api_base";
+    var KEY_SDK = "acme_zerra_sdk_src";
+
+    var paste = document.getElementById("script-paste");
+    var siteKeyEl = document.getElementById("site-key");
+    var apiEl = document.getElementById("api-base");
+    var sdkEl = document.getElementById("sdk-src");
+    var langEl = document.getElementById("test-lang");
+    var countryEl = document.getElementById("test-country");
+    var statusEl = document.getElementById("status");
+    var previewUrl = document.getElementById("preview-url");
+    var STORAGE_PREFIX = "zerra_cookie_consent_";
+
+    function hostDefaults() {
+      var base = "http://" + (location.hostname || "localhost") + ":5174";
+      return { apiBase: base + "/api", sdkSrc: base + "/zerra-sdk.min.js" };
+    }
+
+    function loadStored() {
+      var d = hostDefaults();
+      try {
+        siteKeyEl.value = localStorage.getItem(KEY_SITE) || "";
+        apiEl.value = localStorage.getItem(KEY_API) || d.apiBase;
+        sdkEl.value = localStorage.getItem(KEY_SDK) || d.sdkSrc;
+        var storedApi = localStorage.getItem(KEY_API);
+        if (storedApi) {
+          try {
+            if (new URL(storedApi).hostname !== location.hostname) {
+              apiEl.value = d.apiBase;
+              sdkEl.value = d.sdkSrc;
+            }
+          } catch (e) {}
+        }
+      } catch (e) {
+        apiEl.value = d.apiBase;
+        sdkEl.value = d.sdkSrc;
+      }
+    }
+
+    function persist() {
+      try {
+        localStorage.setItem(KEY_SITE, (siteKeyEl.value || "").trim());
+        localStorage.setItem(KEY_API, (apiEl.value || "").trim().replace(/\/$/, ""));
+        localStorage.setItem(KEY_SDK, (sdkEl.value || "").trim());
+      } catch (e) {}
+    }
+
+    function syncPasteFromFields() {
+      var siteKey = (siteKeyEl.value || "").trim();
+      var apiBase = (apiEl.value || "").trim().replace(/\/$/, "");
+      var sdkSrc = (sdkEl.value || "").trim();
+      paste.value =
+        '<script\n  src="' +
+        sdkSrc +
+        '"\n  data-site-key="' +
+        siteKey +
+        '"\n  data-api-base="' +
+        apiBase +
+        '"\n  async\n><\/script>';
+    }
+
+    function setStatus(msg) { statusEl.textContent = msg; }
+
+    function syncUrlBar() {
+      var parts = [];
+      if (langEl.value) parts.push("lang=" + langEl.value);
+      if (countryEl.value.trim()) parts.push("country=" + countryEl.value.trim().toUpperCase().slice(0, 2));
+      previewUrl.textContent = parts.length
+        ? "preview · ?" + parts.join("&")
+        : "preview · auto language";
+    }
+
+    function parseEmbed(html) {
+      var wrap = document.createElement("div");
+      wrap.innerHTML = String(html || "").trim();
+      var script = wrap.querySelector("script[data-site-key], script[src]");
+      if (!script) return null;
+      return {
+        src: script.getAttribute("src") || "",
+        siteKey: script.getAttribute("data-site-key") || "",
+        apiBase: script.getAttribute("data-api-base") || "",
+        lang: script.getAttribute("data-lang") || "",
+        country: script.getAttribute("data-country") || script.getAttribute("data-cc") || "",
+      };
+    }
+
+    function clearConsent(siteKey) {
+      try {
+        Object.keys(localStorage).forEach(function (k) {
+          if (k.indexOf(STORAGE_PREFIX) === 0) localStorage.removeItem(k);
+        });
+        if (siteKey) localStorage.removeItem(STORAGE_PREFIX + siteKey);
+      } catch (e) {}
+      ["zerra-cookie-banner", "zerra-cookie-manage-button", "zerra-cookie-preferences"].forEach(function (id) {
+        var n = document.getElementById(id);
+        if (n) n.remove();
+      });
+    }
+
+    function pushQueryWithoutReload() {
+      var url = new URL(location.href);
+      ["lang", "locale", "country", "cc"].forEach(function (k) { url.searchParams.delete(k); });
+      if (langEl.value) url.searchParams.set("lang", langEl.value);
+      var country = countryEl.value.trim().toUpperCase().slice(0, 2);
+      if (country) url.searchParams.set("country", country);
+      history.replaceState({}, "", url.toString());
+    }
+
+    function injectScript(cfg) {
+      if (!cfg || !cfg.src || !cfg.siteKey || !cfg.apiBase) {
+        setStatus("Enter a site key (and API/SDK URLs), then Apply.");
+        return;
+      }
+      persist();
+      clearConsent(cfg.siteKey);
+      pushQueryWithoutReload();
+      syncUrlBar();
+
+      document.querySelectorAll('script[data-zerra-embed="1"]').forEach(function (n) { n.remove(); });
+
+      try {
+        window.Zerra = undefined;
+        window.ZERRA_SDK = undefined;
+        window.ZERRA_COOKIE = undefined;
+        window.CMP = undefined;
+      } catch (e) {}
+
+      var s = document.createElement("script");
+      s.src = cfg.src + (cfg.src.indexOf("?") >= 0 ? "&" : "?") + "t=" + Date.now();
+      s.async = true;
+      s.setAttribute("data-zerra-embed", "1");
+      s.setAttribute("data-site-key", cfg.siteKey);
+      s.setAttribute("data-api-base", cfg.apiBase);
+
+      var lang = langEl.value || cfg.lang || "";
+      var country = (countryEl.value || cfg.country || "").trim().toUpperCase().slice(0, 2);
+      if (lang) s.setAttribute("data-lang", String(lang).toLowerCase().split("-")[0]);
+      if (country) s.setAttribute("data-country", country);
+
+      s.onload = function () {
+        setStatus(
+          "Banner loaded · siteKey=" +
+            cfg.siteKey +
+            (lang ? " · lang=" + lang : "") +
+            (country ? " · country=" + country : "")
+        );
+      };
+      s.onerror = function () { setStatus("Failed to load " + cfg.src); };
+      document.body.appendChild(s);
+    }
+
+    function readQueryIntoForm() {
+      var q = new URLSearchParams(location.search);
+      if (q.get("lang")) langEl.value = q.get("lang").toLowerCase().split("-")[0];
+      if (q.get("country") || q.get("cc")) {
+        countryEl.value = String(q.get("country") || q.get("cc")).toUpperCase().slice(0, 2);
+      }
+      syncUrlBar();
+    }
+
+    function applyNow() {
+      syncPasteFromFields();
+      injectScript(parseEmbed(paste.value));
+    }
+
+    document.getElementById("btn-apply").onclick = applyNow;
+    document.getElementById("btn-load").onclick = applyNow;
+    document.getElementById("btn-clear").onclick = function () {
+      syncPasteFromFields();
+      var cfg = parseEmbed(paste.value);
+      clearConsent(cfg && cfg.siteKey);
+      setStatus("Consent cleared. Showing banner again…");
+      injectScript(cfg);
+    };
+
+    document.querySelectorAll(".quick button").forEach(function (btn) {
+      btn.onclick = function () {
+        langEl.value = btn.getAttribute("data-lang") || "";
+        countryEl.value = btn.getAttribute("data-country") || "";
+        applyNow();
+      };
+    });
+
+    [siteKeyEl, apiEl, sdkEl].forEach(function (el) {
+      el.addEventListener("change", function () {
+        persist();
+        syncPasteFromFields();
+      });
+      el.addEventListener("input", syncPasteFromFields);
+    });
+
+    langEl.onchange = syncUrlBar;
+    countryEl.oninput = syncUrlBar;
+
+    loadStored();
+    syncPasteFromFields();
+    readQueryIntoForm();
+    if ((siteKeyEl.value || "").trim()) applyNow();
+    else setStatus("Enter your zk_ site key, then Apply & show banner.");
+  })();
+  </script>
+</body>
+</html>
